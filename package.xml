@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<package format="3">
+    <name>ORB_SLAM3_ROS2_pointcloud</name>
+    <version>0.0.1</version>
+    <description>ROS 2 package for ORB_SLAM3 pointcloud integration.</description>
+    <maintainer email="ahn.avocado@gmail.com">Sukyum Ahn</maintainer>
+    <author>Sukyum Ahn</author>
+    <license>MIT</license>
+
+    <buildtool_depend>ament_cmake</buildtool_depend>
+
+    <depend>rclcpp</depend>
+    <depend>sensor_msgs</depend>
+    <depend>cv_bridge</depend>
+    <depend>message_filters</depend>
+    <depend>Pangolin</depend>
+
+
+    <export>
+        <build_type>ament_cmake</build_type>
+    </export>
+</package>
