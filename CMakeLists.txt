@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.5)
-project(ORB_SLAM3_ROS2_pointcloud)
+project(orbslam3)
 
 # You should set the PYTHONPATH to your own python site-packages path
 set(ENV{PYTHONPATH} "/opt/ros/humble/lib/python3.8/site-packages/")

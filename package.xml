@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <package format="3">
-    <name>ORB_SLAM3_ROS2_pointcloud</name>
+    <name>orbslam3</name>
     <version>0.0.1</version>
     <description>ROS 2 package for ORB_SLAM3 pointcloud integration.</description>
     <maintainer email="ahn.avocado@gmail.com">Sukyum Ahn</maintainer>
