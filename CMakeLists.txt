@@ -59,7 +59,9 @@ ament_target_dependencies(rgbd rclcpp sensor_msgs cv_bridge message_filters ORB_
 # )
 # ament_target_dependencies(stereo-inertial rclcpp sensor_msgs cv_bridge ORB_SLAM3 Pangolin)
 
-install(TARGETS mono rgbd stereo stereo-inertial
+# install(TARGETS mono rgbd stereo stereo-inertial
+#   DESTINATION lib/${PROJECT_NAME})
+install(TARGETS mono rgbd 
   DESTINATION lib/${PROJECT_NAME})
 
 # Install launch files.
