@@ -1,0 +1,27 @@
+# ---- CMake / Build ----
+build/
+install/
+log/
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+*.cmake~
+Makefile
+
+# ---- ROS2 colcon ----
+.colcon/
+*.log
+*.pyc
+__pycache__/
+
+# ---- IDE / Editor ----
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# ---- OS specific ----
+.DS_Store
+Thumbs.db
+
