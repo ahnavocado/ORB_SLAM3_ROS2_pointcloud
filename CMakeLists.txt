@@ -35,12 +35,18 @@ link_directories(
 )
 
 add_executable(mono
+  src/node.cpp
+  src/viewer.cpp
+  src/utils/Utils.cpp
   src/monocular/mono.cpp
   src/monocular/monocular-slam-node.cpp
 )
 ament_target_dependencies(mono rclcpp sensor_msgs cv_bridge ORB_SLAM3 Pangolin)
 
 add_executable(rgbd
+  src/node.cpp
+  src/viewer.cpp
+  src/utils/Utils.cpp
   src/rgbd/rgbd.cpp
   src/rgbd/rgbd-slam-node.cpp
 )
