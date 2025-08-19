@@ -38,10 +38,6 @@ include_directories(SYSTEM
   ${ORB_SLAM3_ROOT_DIR}/include/CameraModels
 )
 
-link_directories(
-  include
-)
-
 add_executable(mono
   src/node.cpp
   src/viewer.cpp
@@ -76,25 +72,10 @@ target_compile_options(rgbd PRIVATE
   -Wno-error=unused-parameter
 )
 
-# add_executable(stereo
-#   src/stereo/stereo.cpp
-#   src/stereo/stereo-slam-node.cpp
-# )
-# ament_target_dependencies(stereo rclcpp sensor_msgs cv_bridge message_filters
-# ORB_SLAM3 Pangolin)
-
-# add_executable(stereo-inertial
-#   src/stereo-inertial/stereo-inertial.cpp
-#   src/stereo-inertial/stereo-inertial-node.cpp
-# )
-# ament_target_dependencies(stereo-inertial rclcpp sensor_msgs cv_bridge ORB_SLAM3 Pangolin)
-
 install(TARGETS mono rgbd
   DESTINATION lib/${PROJECT_NAME})
-# install(TARGETS mono rgbd stereo stereo-inertial
-#   DESTINATION lib/${PROJECT_NAME})
-# Install launch files.
-#install(DIRECTORY launch config vocabulary
-#  DESTINATION share/${PROJECT_NAME}/)
+
+install(DIRECTORY config vocabulary
+  DESTINATION share/${PROJECT_NAME}/)
 
 ament_package()
