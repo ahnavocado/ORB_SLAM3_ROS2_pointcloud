@@ -28,3 +28,4 @@ rclcpp::Time toROSTime(double timestamp)
   const int64_t nsec = static_cast<int64_t>(timestamp * 1e9);
   return rclcpp::Time(nsec);
 }
+}
