@@ -3,7 +3,7 @@
 //
 
 #include "utils/Utils.h"
-void Utils::toTransformMsg(Sophus::SE3f Twc, geometry_msgs::Transform* tf) {
+void Utils::toTransformMsg(Sophus::SE3f Twc, eometry_msgs::msg::Transform* tf) {
   tf->translation.x = Twc.translation().x();
   tf->translation.y = Twc.translation().y();
   tf->translation.z = Twc.translation().z();
@@ -12,7 +12,7 @@ void Utils::toTransformMsg(Sophus::SE3f Twc, geometry_msgs::Transform* tf) {
   tf->rotation.y = Twc.unit_quaternion().y();
   tf->rotation.z = Twc.unit_quaternion().z();
 }
-ros::Time Utils::toROSTime(double timestamp) {
+rclcpp::Time Utils::toROSTime(double timestamp) {
   rclcpp::Time output(static_cast<int64_t>(timestamp * 1e9));
   return output;
 }
