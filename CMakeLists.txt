@@ -29,6 +29,8 @@ find_package(nav_msgs REQUIRED)
 find_package(tf2 REQUIRED)
 find_package(tf2_ros REQUIRED)
 find_package(tf2_geometry_msgs REQUIRED)
+find_package(pcl_conversions REQUIRED)
+find_package(std_srvs REQUIRED)
 
 include_directories(
   include
@@ -45,7 +47,7 @@ add_executable(mono
   src/monocular/mono.cpp
   src/monocular/monocular-slam-node.cpp
 )
-ament_target_dependencies(mono rclcpp sensor_msgs cv_bridge ORB_SLAM3 Pangolin image_transport geometry_msgs nav_msgs message_filters Sophus tf2_ros tf2_geometry_msgs)
+ament_target_dependencies(mono rclcpp sensor_msgs cv_bridge ORB_SLAM3 Pangolin image_transport geometry_msgs nav_msgs message_filters Sophus tf2_ros tf2_geometry_msgs pcl_conversions std_srvs)
 
 target_compile_options(mono PRIVATE
   -Wno-error                # 모든 경고를 에러로 취급하지 않음
@@ -62,7 +64,7 @@ add_executable(rgbd
   src/rgbd/rgbd.cpp
   src/rgbd/rgbd-slam-node.cpp
 )
-ament_target_dependencies(rgbd rclcpp sensor_msgs cv_bridge message_filters ORB_SLAM3 Pangolin image_transport geometry_msgs nav_msgs Sophus tf2_ros tf2_geometry_msgs)
+ament_target_dependencies(rgbd rclcpp sensor_msgs cv_bridge message_filters ORB_SLAM3 Pangolin image_transport geometry_msgs nav_msgs Sophus tf2_ros tf2_geometry_msgs pcl_conversions std_srvs)
 
 target_compile_options(rgbd PRIVATE
   -Wno-error                # 모든 경고를 에러로 취급하지 않음
