@@ -2,12 +2,12 @@
 #define NODE_H
 
 #include <System.h>
-#include "ORB_SLAM3/KeyFrame.h"
-#include "ORB_SLAM3/MapPoint.h"
-#include "ORB_SLAM3/Atlas.h"
-#include "ORB_SLAM3/LocalMapping.h"
-#include "ORB_SLAM3/MapDrawer.h"
-#include "ORB_SLAM3/FrameDrawer.h"
+#include "KeyFrame.h"
+#include "MapPoint.h"
+#include "Atlas.h"
+#include "LocalMapping.h"
+#include "MapDrawer.h"
+#include "FrameDrawer.h"
 
 #include <rclcpp/rclcpp.hpp>
 #include <image_transport/image_transport.hpp>
