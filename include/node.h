@@ -1,7 +1,7 @@
 #ifndef NODE_H
 #define NODE_H
 
-#include "ORB_SLAM3/System.h"
+#include <System.h>
 #include "ORB_SLAM3/KeyFrame.h"
 #include "ORB_SLAM3/MapPoint.h"
 #include "ORB_SLAM3/Atlas.h"

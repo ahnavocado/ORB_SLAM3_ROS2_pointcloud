@@ -1,7 +1,4 @@
-//
-// Created by vuong on 4/27/22.
-// Ported to ROS2
-//
+
 
 #ifndef ORB_SLAM3_ROS_VIEWER_H
 #define ORB_SLAM3_ROS_VIEWER_H
