@@ -80,4 +80,4 @@ install(TARGETS mono rgbd
 install(DIRECTORY config vocabulary
   DESTINATION share/${PROJECT_NAME}/)
 
-ament_package()
+ament_package() 
