@@ -27,6 +27,8 @@ find_package(geometry_msgs REQUIRED)
 
 include_directories(
   include
+)
+include_directories(SYSTEM
   ${ORB_SLAM3_ROOT_DIR}/include
   ${ORB_SLAM3_ROOT_DIR}/include/CameraModels
 )
@@ -44,6 +46,14 @@ add_executable(mono
 )
 ament_target_dependencies(mono rclcpp sensor_msgs cv_bridge ORB_SLAM3 Pangolin)
 
+target_compile_options(mono PRIVATE
+  -Wno-error                # 모든 경고를 에러로 취급하지 않음
+  -Wno-error=deprecated-declarations
+  -Wno-deprecated-declarations
+  -Wno-error=reorder
+  -Wno-error=unused-parameter
+)
+
 add_executable(rgbd
   src/node.cpp
   src/viewer.cpp
@@ -52,6 +62,14 @@ add_executable(rgbd
   src/rgbd/rgbd-slam-node.cpp
 )
 ament_target_dependencies(rgbd rclcpp sensor_msgs cv_bridge message_filters ORB_SLAM3 Pangolin)
+
+target_compile_options(rgbd PRIVATE
+  -Wno-error                # 모든 경고를 에러로 취급하지 않음
+  -Wno-error=deprecated-declarations
+  -Wno-deprecated-declarations
+  -Wno-error=reorder
+  -Wno-error=unused-parameter
+)
 
 # add_executable(stereo
 #   src/stereo/stereo.cpp
