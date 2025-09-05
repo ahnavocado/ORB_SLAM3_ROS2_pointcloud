@@ -15,6 +15,14 @@ MonocularSlamNode::MonocularSlamNode(ORB_SLAM3::System* pSLAM)
         10,
         std::bind(&MonocularSlamNode::GrabImage, this, std::placeholders::_1));
     std::cout << "slam changed" << std::endl;
+
+        
+
+    // Create Publishers
+    // mPosePub = this->create_publisher<nav_msgs::msg::Odometry>(this->get_name() + std::string("/Pose"), 10);
+    // ready_pub_ = this->create_publisher<std_msgs::msg::Empty>("ready_to_go", 10);
+
+
 }
 
 MonocularSlamNode::~MonocularSlamNode()

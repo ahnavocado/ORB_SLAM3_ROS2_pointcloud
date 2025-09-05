@@ -23,6 +23,15 @@ find_package(message_filters REQUIRED)
 find_package(Sophus REQUIRED)
 find_package(Pangolin REQUIRED)
 find_package(ORB_SLAM3 REQUIRED)
+find_package(image_transport REQUIRED)
+find_package(tf2_ros REQUIRED)
+find_package(nav_msgs REQUIRED)
+find_package(std_msgs REQUIRED)
+find_package(std_srvs REQUIRED)
+find_package(geometry_msgs REQUIRED)
+
+
+
 
 include_directories(
   include
@@ -38,7 +47,21 @@ add_executable(mono
   src/monocular/mono.cpp
   src/monocular/monocular-slam-node.cpp
 )
-ament_target_dependencies(mono rclcpp sensor_msgs cv_bridge ORB_SLAM3 Pangolin)
+# ament_target_dependencies(mono rclcpp sensor_msgs cv_bridge ORB_SLAM3 Pangolin)
+ament_target_dependencies(mono
+  rclcpp
+  image_transport
+  sensor_msgs 
+  cv_bridge 
+  ORB_SLAM3 
+  Pangolin
+  tf2_ros
+  nav_msgs
+  std_msgs
+  std_srvs
+  sensor_msgs
+  geometry_msgs
+)
 
 add_executable(rgbd
   src/rgbd/rgbd.cpp
