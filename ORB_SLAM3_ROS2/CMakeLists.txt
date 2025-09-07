@@ -29,6 +29,8 @@ find_package(nav_msgs REQUIRED)
 find_package(std_msgs REQUIRED)
 find_package(std_srvs REQUIRED)
 find_package(geometry_msgs REQUIRED)
+find_package(tf2_geometry_msgs REQUIRED)
+find_package(pcl_conversions REQUIRED)
 
 
 
@@ -46,6 +48,7 @@ link_directories(
 add_executable(mono
   src/monocular/mono.cpp
   src/monocular/monocular-slam-node.cpp
+  src/viewer.cpp
 )
 # ament_target_dependencies(mono rclcpp sensor_msgs cv_bridge ORB_SLAM3 Pangolin)
 ament_target_dependencies(mono
@@ -61,6 +64,8 @@ ament_target_dependencies(mono
   std_srvs
   sensor_msgs
   geometry_msgs
+  tf2_geometry_msgs
+  pcl_conversions
 )
 
 add_executable(rgbd

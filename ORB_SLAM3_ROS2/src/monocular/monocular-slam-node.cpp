@@ -4,10 +4,12 @@
 
 using std::placeholders::_1;
 
-MonocularSlamNode::MonocularSlamNode(ORB_SLAM3::System* pSLAM)
+MonocularSlamNode::MonocularSlamNode(const std::string& vocab,
+                    const std::string& settings,
+                bool use_viewer)
 :   Node("ORB_SLAM3_ROS2_pointcloud")
 {
-    m_SLAM = pSLAM;
+
     // Creates a subscription to the "camera" topic.
     // For every message received, it calls the "GrabImage" function.
     m_image_subscriber = this->create_subscription<ImageMsg>(
@@ -16,7 +18,22 @@ MonocularSlamNode::MonocularSlamNode(ORB_SLAM3::System* pSLAM)
         std::bind(&MonocularSlamNode::GrabImage, this, std::placeholders::_1));
     std::cout << "slam changed" << std::endl;
 
-        
+    bool visualization = false;
+    // bool visualization = use_viewer;
+    // Creates the main ORB_SLAM3 system object
+    mORB_SLAM3 = new ORB_SLAM3::System(vocab, settings, ORB_SLAM3::System::MONOCULAR, visualization);
+
+    // Get pointers to SLAM components
+    mpLocalMapping = mORB_SLAM3->mpLocalMapper;
+    mpMapDrawer = mORB_SLAM3->mpMapDrawer;
+    mpAtlas = mORB_SLAM3->mpAtlas;
+
+    // Initialize ROS viewer
+    // ros_viewer_ = new viewer(this, mpLocalMapping, mORB_SLAM3->mpFrameDrawer, mpMapDrawer, mbIMU);
+
+    // auto self = this->shared_from_this(); 
+    // ros_viewer_ = new viewer(self, mpLocalMapping, mORB_SLAM3->mpFrameDrawer, mpMapDrawer, false);
+
 
     // Create Publishers
     // mPosePub = this->create_publisher<nav_msgs::msg::Odometry>(this->get_name() + std::string("/Pose"), 10);

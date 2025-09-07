@@ -20,7 +20,7 @@
 #include <Eigen/Eigen>
 #include <sophus/se3.hpp>
 
-// #include "viewer_ros2.h" // Assuming this is also ported or compatible
+#include "viewer.hpp" // Assuming this is also ported or compatible
 
 // For rosbag2
 // #include <rosbag2_cpp/writer.hpp>
@@ -28,12 +28,6 @@
 // #include <rclcpp/serialization.hpp>
 
 
-// ORB_SLAM3 system
-ORB_SLAM3::System *mORB_SLAM3;
-ORB_SLAM3::System::eSensor mSensor;
-ORB_SLAM3::Atlas *mpAtlas;
-ORB_SLAM3::LocalMapping *mpLocalMapping;
-ORB_SLAM3::MapDrawer *mpMapDrawer;
 
 
 class node : public rclcpp::Node {
@@ -77,7 +71,7 @@ private:
     Sophus::SE3f spT_ROS_ORB;
 
     // Viewer
-    // viewer *ros_viewer_;
+    viewer *ros_viewer_;
 
     // Camera Info
     float fx, fy, cx, cy, k1, k2, t1, t2;

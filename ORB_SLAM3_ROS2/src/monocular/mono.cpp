@@ -19,22 +19,12 @@ int main(int argc, char **argv)
     // Initializes ROS2
     rclcpp::init(argc, argv);
 
-    bool visualization = true;
-    // Creates the main ORB_SLAM3 system object
-    mORB_SLAM3 = new ORB_SLAM3::System(argv[1], argv[2], ORB_SLAM3::System::MONOCULAR, visualization);
-
-    // Get pointers to SLAM components
-    mpLocalMapping = mORB_SLAM3->mpLocalMapper;
-    mpMapDrawer = mORB_SLAM3->mpMapDrawer;
-    mpAtlas = mORB_SLAM3->mpAtlas;
-
-    // Initialize ROS viewer
-    // ros_viewer_ = new viewer(this, mpLocalMapping, mORB_SLAM3->mpFrameDrawer, mpMapDrawer, mbIMU);
-    ros_viewer_ = new viewer(this, mpLocalMapping, mORB_SLAM3->mpFrameDrawer, mpMapDrawer, false);
-
+    const std::string vocab = argv[1];
+    const std::string settings = argv[2];
+    
 
     // Creates the ROS2 node, passing the SLAM system to it
-    auto node = std::make_shared<MonocularSlamNode>(mORB_SLAM3);
+    auto node = std::make_shared<MonocularSlamNode>(vocab, settings);
     std::cout << "============================ " << std::endl;
 
 
