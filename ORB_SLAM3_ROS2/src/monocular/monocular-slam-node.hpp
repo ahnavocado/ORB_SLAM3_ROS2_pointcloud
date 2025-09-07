@@ -22,6 +22,8 @@ public:
                       const std::string& settings,
                       bool use_viewer = true);
 
+                     
+    void init_viewer();
     ~MonocularSlamNode();
 
 private:

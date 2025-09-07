@@ -18,7 +18,7 @@ MonocularSlamNode::MonocularSlamNode(const std::string& vocab,
         std::bind(&MonocularSlamNode::GrabImage, this, std::placeholders::_1));
     std::cout << "slam changed" << std::endl;
 
-    bool visualization = false;
+    bool visualization = true;
     // bool visualization = use_viewer;
     // Creates the main ORB_SLAM3 system object
     mORB_SLAM3 = new ORB_SLAM3::System(vocab, settings, ORB_SLAM3::System::MONOCULAR, visualization);
@@ -28,18 +28,22 @@ MonocularSlamNode::MonocularSlamNode(const std::string& vocab,
     mpMapDrawer = mORB_SLAM3->mpMapDrawer;
     mpAtlas = mORB_SLAM3->mpAtlas;
 
-    // Initialize ROS viewer
-    // ros_viewer_ = new viewer(this, mpLocalMapping, mORB_SLAM3->mpFrameDrawer, mpMapDrawer, mbIMU);
-
-    // auto self = this->shared_from_this(); 
-    // ros_viewer_ = new viewer(self, mpLocalMapping, mORB_SLAM3->mpFrameDrawer, mpMapDrawer, false);
-
 
     // Create Publishers
     // mPosePub = this->create_publisher<nav_msgs::msg::Odometry>(this->get_name() + std::string("/Pose"), 10);
     // ready_pub_ = this->create_publisher<std_msgs::msg::Empty>("ready_to_go", 10);
 
 
+}
+
+void MonocularSlamNode::init_viewer()
+{
+   // Initialize ROS viewer
+    // ros_viewer_ = new viewer(this, mpLocalMapping, mORB_SLAM3->mpFrameDrawer, mpMapDrawer, mbIMU);
+  auto self = this->shared_from_this();  
+  
+//   ros_viewer_ = std::make_shared<viewer>(self, mpLocalMapping, mORB_SLAM3->mpFrameDrawer, mpMapDrawer, false);
+  ros_viewer_ = new viewer(self, mpLocalMapping, mORB_SLAM3->mpFrameDrawer, mpMapDrawer, false);
 }
 
 MonocularSlamNode::~MonocularSlamNode()
