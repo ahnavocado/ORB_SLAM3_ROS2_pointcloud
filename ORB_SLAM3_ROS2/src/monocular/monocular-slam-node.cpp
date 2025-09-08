@@ -25,10 +25,11 @@ MonocularSlamNode::MonocularSlamNode(const std::string& vocab,
 
 
 
+
     // Get pointers to SLAM components
-    // mpLocalMapping = mORB_SLAM3->mpLocalMapper;
-    // mpMapDrawer = mORB_SLAM3->mpMapDrawer;
-    // mpAtlas = mORB_SLAM3->mpAtlas;
+    mpLocalMapping = mORB_SLAM3->mpLocalMapper;
+    mpMapDrawer = mORB_SLAM3->mpMapDrawer;
+    mpAtlas = mORB_SLAM3->mpAtlas;
 
 
     // Create Publishers
@@ -44,8 +45,15 @@ void MonocularSlamNode::init_viewer()
     // ros_viewer_ = new viewer(this, mpLocalMapping, mORB_SLAM3->mpFrameDrawer, mpMapDrawer, mbIMU);
   auto self = this->shared_from_this();  
   
+    // ROS2 logger로 출력 (노드 이름과 함께)
+    RCLCPP_INFO(this->get_logger(), "mpLocalMapping pointer: %p", mpLocalMapping);
+    RCLCPP_INFO(this->get_logger(), "mpMapDrawer pointer: %p", mpMapDrawer);
+    RCLCPP_INFO(this->get_logger(), "mpAtlas pointer: %p", mpAtlas);
+
+
 //   ros_viewer_ = std::make_shared<viewer>(self, mpLocalMapping, mORB_SLAM3->mpFrameDrawer, mpMapDrawer, false);
   ros_viewer_ = new viewer(self, mpLocalMapping, mORB_SLAM3->mpFrameDrawer, mpMapDrawer, false);
+  std::thread viewer_thread(&viewer::run, ros_viewer_);
 }
 
 MonocularSlamNode::~MonocularSlamNode()
@@ -70,6 +78,6 @@ void MonocularSlamNode::GrabImage(const ImageMsg::SharedPtr msg)
         return;
     }
 
-    std::cout<<"one frame has been sent (ORB_SLAM3_ROS2_pointcloud)"<<std::endl;
+    // std::cout<<"one frame has been sent (ORB_SLAM3_ROS2_pointcloud)"<<std::endl;
     mORB_SLAM3->TrackMonocular(m_cvImPtr->image, Utility::StampToSec(msg->header.stamp));
 }

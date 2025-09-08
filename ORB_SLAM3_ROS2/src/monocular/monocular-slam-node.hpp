@@ -33,6 +33,7 @@ private:
 
     ORB_SLAM3::System* m_SLAM;
     
+    
     // ORB_SLAM3 system
     ORB_SLAM3::System *mORB_SLAM3;
     ORB_SLAM3::System::eSensor mSensor;
