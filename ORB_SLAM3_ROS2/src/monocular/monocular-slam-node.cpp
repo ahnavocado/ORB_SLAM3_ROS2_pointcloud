@@ -10,6 +10,11 @@ MonocularSlamNode::MonocularSlamNode(const std::string& vocab,
 :   Node("ORB_SLAM3_ROS2_pointcloud")
 {
 
+    bool visualization = true;
+    // bool visualization = use_viewer;
+    // Creates the main ORB_SLAM3 system object
+    mORB_SLAM3 = new ORB_SLAM3::System(vocab, settings, ORB_SLAM3::System::MONOCULAR, visualization);
+
     // Creates a subscription to the "camera" topic.
     // For every message received, it calls the "GrabImage" function.
     m_image_subscriber = this->create_subscription<ImageMsg>(
@@ -18,15 +23,12 @@ MonocularSlamNode::MonocularSlamNode(const std::string& vocab,
         std::bind(&MonocularSlamNode::GrabImage, this, std::placeholders::_1));
     std::cout << "slam changed" << std::endl;
 
-    bool visualization = true;
-    // bool visualization = use_viewer;
-    // Creates the main ORB_SLAM3 system object
-    mORB_SLAM3 = new ORB_SLAM3::System(vocab, settings, ORB_SLAM3::System::MONOCULAR, visualization);
+
 
     // Get pointers to SLAM components
-    mpLocalMapping = mORB_SLAM3->mpLocalMapper;
-    mpMapDrawer = mORB_SLAM3->mpMapDrawer;
-    mpAtlas = mORB_SLAM3->mpAtlas;
+    // mpLocalMapping = mORB_SLAM3->mpLocalMapper;
+    // mpMapDrawer = mORB_SLAM3->mpMapDrawer;
+    // mpAtlas = mORB_SLAM3->mpAtlas;
 
 
     // Create Publishers
@@ -49,10 +51,10 @@ void MonocularSlamNode::init_viewer()
 MonocularSlamNode::~MonocularSlamNode()
 {
     // Stop all threads
-    m_SLAM->Shutdown();
+    mORB_SLAM3->Shutdown();
 
     // Save camera trajectory
-    m_SLAM->SaveKeyFrameTrajectoryTUM("KeyFrameTrajectory.txt");
+    mORB_SLAM3->SaveKeyFrameTrajectoryTUM("KeyFrameTrajectory.txt");
 }
 
 void MonocularSlamNode::GrabImage(const ImageMsg::SharedPtr msg)
@@ -68,6 +70,6 @@ void MonocularSlamNode::GrabImage(const ImageMsg::SharedPtr msg)
         return;
     }
 
-    std::cout<<"one frame has been sent (- ORB_SLAM3_ROS2_pointcloud)"<<std::endl;
-    m_SLAM->TrackMonocular(m_cvImPtr->image, Utility::StampToSec(msg->header.stamp));
+    std::cout<<"one frame has been sent (ORB_SLAM3_ROS2_pointcloud)"<<std::endl;
+    mORB_SLAM3->TrackMonocular(m_cvImPtr->image, Utility::StampToSec(msg->header.stamp));
 }
