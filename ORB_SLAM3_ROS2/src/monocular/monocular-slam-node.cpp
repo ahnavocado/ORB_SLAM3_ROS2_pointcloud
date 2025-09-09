@@ -10,27 +10,17 @@ MonocularSlamNode::MonocularSlamNode(const std::string& vocab,
 :   Node("ORB_SLAM3_ROS2_pointcloud")
 {
 
-    bool visualization = true;
+    bool visualization = false;
     // bool visualization = use_viewer;
     // Creates the main ORB_SLAM3 system object
     mORB_SLAM3 = new ORB_SLAM3::System(vocab, settings, ORB_SLAM3::System::MONOCULAR, visualization);
-
-    // Creates a subscription to the "camera" topic.
-    // For every message received, it calls the "GrabImage" function.
-    m_image_subscriber = this->create_subscription<ImageMsg>(
-        "camera",
-        10,
-        std::bind(&MonocularSlamNode::GrabImage, this, std::placeholders::_1));
-    std::cout << "slam changed" << std::endl;
-
-
 
 
     // Get pointers to SLAM components
     mpLocalMapping = mORB_SLAM3->mpLocalMapper;
     mpMapDrawer = mORB_SLAM3->mpMapDrawer;
     mpAtlas = mORB_SLAM3->mpAtlas;
-
+    
 
     // Create Publishers
     // mPosePub = this->create_publisher<nav_msgs::msg::Odometry>(this->get_name() + std::string("/Pose"), 10);
@@ -53,16 +43,43 @@ void MonocularSlamNode::init_viewer()
 
 //   ros_viewer_ = std::make_shared<viewer>(self, mpLocalMapping, mORB_SLAM3->mpFrameDrawer, mpMapDrawer, false);
   ros_viewer_ = new viewer(self, mpLocalMapping, mORB_SLAM3->mpFrameDrawer, mpMapDrawer, false);
-  std::thread viewer_thread(&viewer::run, ros_viewer_);
+  viewer_thread_ = std::thread(&viewer::run, ros_viewer_);
+  
+}
+void MonocularSlamNode::init_subscribers()
+{
+    m_image_subscriber = this->create_subscription<ImageMsg>(
+        "camera",
+        10,
+        std::bind(&MonocularSlamNode::GrabImage, this, _1));
+
+    RCLCPP_INFO(this->get_logger(), "Image subscriber initialized on topic: 'camera'");
 }
 
 MonocularSlamNode::~MonocularSlamNode()
 {
+    if (ros_viewer_) {
+        std::cout << "1 You have come to a wrong place " << std::endl;
+        ros_viewer_->request_terminate();
+    }
+
+    if (viewer_thread_.joinable()) {
+        std::cout << "2 You have come to a wrong place " << std::endl;
+        viewer_thread_.join();
+    }   
+
+
     // Stop all threads
     mORB_SLAM3->Shutdown();
 
     // Save camera trajectory
     mORB_SLAM3->SaveKeyFrameTrajectoryTUM("KeyFrameTrajectory.txt");
+
+    delete mORB_SLAM3;
+    mORB_SLAM3 = nullptr;
+
+    delete ros_viewer_;
+    ros_viewer_ = nullptr;
 }
 
 void MonocularSlamNode::GrabImage(const ImageMsg::SharedPtr msg)
@@ -80,4 +97,15 @@ void MonocularSlamNode::GrabImage(const ImageMsg::SharedPtr msg)
 
     // std::cout<<"one frame has been sent (ORB_SLAM3_ROS2_pointcloud)"<<std::endl;
     mORB_SLAM3->TrackMonocular(m_cvImPtr->image, Utility::StampToSec(msg->header.stamp));
+    Sophus::SE3f Tcw = mORB_SLAM3->TrackMonocular(m_cvImPtr->image, Utility::StampToSec(msg->header.stamp));
+
+
+    if (ros_viewer_)
+    {
+        ros_viewer_->mTcw = Tcw;
+        ros_viewer_->setStamp(msg->header.stamp);
+        ros_viewer_->setIsStart(true);
+    }
+
+
 }

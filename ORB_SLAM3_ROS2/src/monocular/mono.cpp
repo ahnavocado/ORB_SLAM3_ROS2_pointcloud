@@ -26,6 +26,7 @@ int main(int argc, char **argv)
     // Creates the ROS2 node, passing the SLAM system to it
     auto node = std::make_shared<MonocularSlamNode>(vocab, settings);
     node->init_viewer();
+    node->init_subscribers();
     std::cout << "============================ " << std::endl;
 
 

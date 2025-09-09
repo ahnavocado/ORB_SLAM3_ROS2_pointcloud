@@ -96,11 +96,13 @@ void viewer::publish_reference_cloud() {
 void viewer::run() {
     is_terminated_ = false;
     rclcpp::Rate rate(30);
+    
     while (rclcpp::ok()) {
         if (is_start_) {
+            std::cout << "viewer is runnnnnning" << std::endl;
             publish_local_map_point(stamp_);
-            publish_map_point(stamp_);
-            publish_debug_image(stamp_);
+            // publish_map_point(stamp_);
+            // publish_debug_image(stamp_); // mono: pthread_mutex_lock.c:94: ___pthread_mutex_lock: Assertion `mutex->__data.__owner == 0' failed.
             setIsStart(false);
             std::cout<<"viewer running"<<std::endl;
         }
@@ -184,6 +186,14 @@ void viewer::terminate() {
 }
 
 void viewer::publish_local_map_point(const rclcpp::Time &stamp) {
+    if (!mpMapDrawer_) {
+        RCLCPP_ERROR(node_->get_logger(), "CRASH_DEBUG: mpMapDrawer_ is null inside publish_map_point!");
+        return;
+    }
+    if (!mpMapDrawer_->mpAtlas) {
+        RCLCPP_ERROR(node_->get_logger(), "CRASH_DEBUG: mpMapDrawer_->mpAtlas is null inside publish_map_point!");
+        return;
+    }
     ORB_SLAM3::Map *pActiveMap = mpMapDrawer_->mpAtlas->GetCurrentMap();
     if (!pActiveMap) return;
 
@@ -227,17 +237,28 @@ void viewer::publish_local_map_point(const rclcpp::Time &stamp) {
 }
 
 void viewer::publish_map_point(const rclcpp::Time &stamp) {
-    ORB_SLAM3::Map *pActiveMap = mpMapDrawer_->mpAtlas->GetCurrentMap();
 
+    if (!mpMapDrawer_) {
+        RCLCPP_ERROR(node_->get_logger(), "CRASH_DEBUG: mpMapDrawer_ is null inside publish_map_point!");
+        return;
+    }
+
+    if (!mpMapDrawer_->mpAtlas) {
+        RCLCPP_ERROR(node_->get_logger(), "CRASH_DEBUG: mpMapDrawer_->mpAtlas is null inside publish_map_point!");
+        return;
+    }
+    
+    ORB_SLAM3::Map *pActiveMap = mpMapDrawer_->mpAtlas->GetCurrentMap();
+    std::cout << "1 publishing map poinnnnnnts" << std::endl;
     if (!pActiveMap) {
     RCLCPP_INFO(node_->get_logger(), "publish_map_point: pActiveMap is null!");
     return;
     }
-    if (!pActiveMap) return;
-
+    std::cout << "2 publishing map poinnnnnnts" << std::endl;
     const std::vector<ORB_SLAM3::MapPoint *> &vpMPs = pActiveMap->GetAllMapPoints();
-    
+    std::cout << "3 publishing map poinnnnnnts" << std::endl;
     const std::vector<ORB_SLAM3::MapPoint *> &vpRefMPs = pActiveMap->GetReferenceMapPoints();
+    std::cout << "4 publishing map poinnnnnnts" << std::endl;
     std::set<ORB_SLAM3::MapPoint *> spRefMPs(vpRefMPs.begin(), vpRefMPs.end());
 
     RCLCPP_INFO(node_->get_logger(),"Attempting to publish %zu map points (Reference: %zu).",vpMPs.size(), spRefMPs.size());

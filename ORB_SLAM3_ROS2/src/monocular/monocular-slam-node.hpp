@@ -24,6 +24,7 @@ public:
 
                      
     void init_viewer();
+    void init_subscribers();
     ~MonocularSlamNode();
 
 private:
@@ -33,6 +34,7 @@ private:
 
     ORB_SLAM3::System* m_SLAM;
     
+    std::thread viewer_thread_;
     
     // ORB_SLAM3 system
     ORB_SLAM3::System *mORB_SLAM3;
