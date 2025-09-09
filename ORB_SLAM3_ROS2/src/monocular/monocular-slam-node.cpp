@@ -10,7 +10,7 @@ MonocularSlamNode::MonocularSlamNode(const std::string& vocab,
 :   Node("ORB_SLAM3_ROS2_pointcloud")
 {
 
-    bool visualization = false;
+    bool visualization = true;
     // bool visualization = use_viewer;
     // Creates the main ORB_SLAM3 system object
     mORB_SLAM3 = new ORB_SLAM3::System(vocab, settings, ORB_SLAM3::System::MONOCULAR, visualization);
@@ -102,6 +102,7 @@ void MonocularSlamNode::GrabImage(const ImageMsg::SharedPtr msg)
 
     if (ros_viewer_)
     {
+        std::cout << "0 ros_viewer_ is madeeeeeee" << std::endl;
         ros_viewer_->mTcw = Tcw;
         ros_viewer_->setStamp(msg->header.stamp);
         ros_viewer_->setIsStart(true);

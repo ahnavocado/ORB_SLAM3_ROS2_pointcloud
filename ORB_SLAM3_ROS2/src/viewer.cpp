@@ -100,8 +100,9 @@ void viewer::run() {
     while (rclcpp::ok()) {
         if (is_start_) {
             std::cout << "viewer is runnnnnning" << std::endl;
-            publish_local_map_point(stamp_);
-            // publish_map_point(stamp_);
+            // publish_local_map_point(stamp_);
+            publish_map_point(stamp_);
+            publish_path(stamp_);
             // publish_debug_image(stamp_); // mono: pthread_mutex_lock.c:94: ___pthread_mutex_lock: Assertion `mutex->__data.__owner == 0' failed.
             setIsStart(false);
             std::cout<<"viewer running"<<std::endl;
@@ -249,6 +250,7 @@ void viewer::publish_map_point(const rclcpp::Time &stamp) {
     }
     
     ORB_SLAM3::Map *pActiveMap = mpMapDrawer_->mpAtlas->GetCurrentMap();
+    
     std::cout << "1 publishing map poinnnnnnts" << std::endl;
     if (!pActiveMap) {
     RCLCPP_INFO(node_->get_logger(), "publish_map_point: pActiveMap is null!");
