@@ -102,7 +102,6 @@ void MonocularSlamNode::GrabImage(const ImageMsg::SharedPtr msg)
 
     if (ros_viewer_)
     {
-        std::cout << "0 ros_viewer_ is madeeeeeee" << std::endl;
         ros_viewer_->mTcw = Tcw;
         ros_viewer_->setStamp(msg->header.stamp);
         ros_viewer_->setIsStart(true);

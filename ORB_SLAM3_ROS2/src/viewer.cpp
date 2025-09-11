@@ -99,7 +99,6 @@ void viewer::run() {
     
     while (rclcpp::ok()) {
         if (is_start_) {
-            std::cout << "viewer is runnnnnning" << std::endl;
             // publish_local_map_point(stamp_);
             publish_map_point(stamp_);
             publish_path(stamp_);
@@ -251,16 +250,12 @@ void viewer::publish_map_point(const rclcpp::Time &stamp) {
     
     ORB_SLAM3::Map *pActiveMap = mpMapDrawer_->mpAtlas->GetCurrentMap();
     
-    std::cout << "1 publishing map poinnnnnnts" << std::endl;
     if (!pActiveMap) {
     RCLCPP_INFO(node_->get_logger(), "publish_map_point: pActiveMap is null!");
     return;
     }
-    std::cout << "2 publishing map poinnnnnnts" << std::endl;
     const std::vector<ORB_SLAM3::MapPoint *> &vpMPs = pActiveMap->GetAllMapPoints();
-    std::cout << "3 publishing map poinnnnnnts" << std::endl;
     const std::vector<ORB_SLAM3::MapPoint *> &vpRefMPs = pActiveMap->GetReferenceMapPoints();
-    std::cout << "4 publishing map poinnnnnnts" << std::endl;
     std::set<ORB_SLAM3::MapPoint *> spRefMPs(vpRefMPs.begin(), vpRefMPs.end());
 
     RCLCPP_INFO(node_->get_logger(),"Attempting to publish %zu map points (Reference: %zu).",vpMPs.size(), spRefMPs.size());

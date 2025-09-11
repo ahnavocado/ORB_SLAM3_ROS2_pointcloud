@@ -248,11 +248,8 @@ void Atlas::clearAtlas()
 
 Map* Atlas::GetCurrentMap()
 {
-    std::cout << "[Atlas::GetCurrentMap] DEBUG: Function entered." << std::endl;
     unique_lock<mutex> lock(mMutexAtlas);
-    std::cout << "[Atlas::GetCurrentMap] DEBUG: Mutex locked." << std::endl;
     if(!mpCurrentMap){
-        std::cout << "[Atlas::GetCurrentMap] DEBUG: mpCurrentMap is null, calling CreateNewMap()." << std::endl;
         CreateNewMap();
     }
         
@@ -260,7 +257,6 @@ Map* Atlas::GetCurrentMap()
         std::cout << "[Atlas::GetCurrentMap] DEBUG: Current map is bad, waiting..." << std::endl;
         usleep(3000);
     }
-    std::cout << "[Atlas::GetCurrentMap] DEBUG: Returning map pointer: " << mpCurrentMap << std::endl;
 
     return mpCurrentMap;
 }
