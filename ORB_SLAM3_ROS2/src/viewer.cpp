@@ -99,10 +99,10 @@ void viewer::run() {
     
     while (rclcpp::ok()) {
         if (is_start_) {
-            // publish_local_map_point(stamp_);
+            publish_local_map_point(stamp_);
             publish_map_point(stamp_);
             publish_path(stamp_);
-            // publish_debug_image(stamp_); // mono: pthread_mutex_lock.c:94: ___pthread_mutex_lock: Assertion `mutex->__data.__owner == 0' failed.
+            publish_debug_image(stamp_); 
             setIsStart(false);
             std::cout<<"viewer running"<<std::endl;
         }
