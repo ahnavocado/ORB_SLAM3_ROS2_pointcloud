@@ -5,6 +5,7 @@ ROS 2 wrapper for **ORB-SLAM3** with point cloud generation support.
 ---
 
 ## 📺 Demo Video
+<img width="1509" height="919" alt="Screenshot 2025-09-18 at 16 11 40" src="https://github.com/user-attachments/assets/fe806c8d-45ba-4d9f-a4b2-bb74e1729446" />
 
 https://youtu.be/hwASetrvGZs?si=L7dGaWlm62rIHIhy
 
@@ -118,4 +119,5 @@ This project extends ORB-SLAM3 with ROS 2 integration and point cloud generation
 ## ▶️ Testing with EuRoC Image
 
 Check out this [repo](https://github.com/ahnavocado/gamja_dataset) for additional info
+
 
