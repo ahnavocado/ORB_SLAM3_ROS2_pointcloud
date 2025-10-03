@@ -191,10 +191,37 @@ System::System(const string& strVocFile,
 
   if (mSensor == IMU_STEREO || mSensor == IMU_MONOCULAR || mSensor == IMU_RGBD)
     mpAtlas->SetInertialSensor();
+  
+  std::cout << "==== Debug before creating Drawers ====" << std::endl;
 
+// mpAtlas 포인터 상태
+std::cout << "[DBG] mpAtlas: " << mpAtlas 
+          << " (" << (mpAtlas ? "NON-NULL" : "NULL") << ")" << std::endl;
+
+// strSettingsFile 문자열 값
+std::cout << "[DBG] strSettingsFile: " << strSettingsFile << std::endl;
+
+// settings_ 포인터 상태
+std::cout << "[DBG] settings_: " << settings_ 
+          << " (" << (settings_ ? "NON-NULL" : "NULL") << ")" << std::endl;
+
+// settings_ 가 null 이 아니면 내부 값도 간단히 찍기
+if (settings_) {
+    std::cout << "[DBG] settings_ object is valid." << std::endl;
+    // 필요하다면 settings_ 안의 특정 값들 출력
+    // 예: std::cout << "newImSize: " << settings_->newImSize() << std::endl;
+} else {
+    std::cout << "[DBG] settings_ is NULL -> MapDrawer 내부에서 크래시 가능성 높음" << std::endl;
+}
+
+std::cout << "=======================================" << std::endl;
+  
   // Create Drawers. These are used by the Viewer
   mpFrameDrawer = new FrameDrawer(mpAtlas);
+  std::cout << "[DBG] mpFrameDrawer created: " << mpFrameDrawer << std::endl;
   mpMapDrawer = new MapDrawer(mpAtlas, strSettingsFile, settings_);
+  std::cout << "[DBG] mpMapDrawer created: " << mpMapDrawer << std::endl;
+  cout << "Drawers created" << endl;
 
   // Initialize the Tracking thread
   //(it will live in the main thread of execution, the one that called this

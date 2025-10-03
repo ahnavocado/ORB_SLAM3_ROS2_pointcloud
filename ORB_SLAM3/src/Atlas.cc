@@ -74,6 +74,7 @@ void Atlas::CreateNewMap()
     mpCurrentMap = new Map(mnLastInitKFidMap);
     mpCurrentMap->SetCurrentMap();
     mspMaps.insert(mpCurrentMap);
+    cout << "New map with ID: " << mpCurrentMap->GetId() << endl;
 }
 
 void Atlas::ChangeMap(Map* pMap)
@@ -249,14 +250,10 @@ void Atlas::clearAtlas()
 Map* Atlas::GetCurrentMap()
 {
     unique_lock<mutex> lock(mMutexAtlas);
-    if(!mpCurrentMap){
+    if(!mpCurrentMap)
         CreateNewMap();
-    }
-        
-    while(mpCurrentMap->IsBad()){
-        std::cout << "[Atlas::GetCurrentMap] DEBUG: Current map is bad, waiting..." << std::endl;
+    while(mpCurrentMap->IsBad())
         usleep(3000);
-    }
 
     return mpCurrentMap;
 }

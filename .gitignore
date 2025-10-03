@@ -27,3 +27,8 @@ Thumbs.db
 
 # ---- large files ----
 ORBvoc.txt
+
+# Object files / libraries
+*.o
+*.so
+*.a
