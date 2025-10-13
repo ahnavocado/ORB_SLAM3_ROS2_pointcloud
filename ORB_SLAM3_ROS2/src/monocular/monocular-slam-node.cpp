@@ -8,7 +8,7 @@ MonocularSlamNode::MonocularSlamNode(const std::string& vocab,
                                      bool use_viewer)
 :   Node("ORB_SLAM3_ROS2_pointcloud")
 {
-    bool visualization = true;
+    bool visualization = false;
     // bool visualization = use_viewer;
 
 
