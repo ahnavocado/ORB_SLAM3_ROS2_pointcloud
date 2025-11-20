@@ -61,11 +61,6 @@ Source environment:
 source install/setup.bash
 ```
 
-Extract vocabulary:
-```bash
-tar -xvzf ./src/ORB_SLAM3_ROS2_pointcloud/vocabulary/ORBvoc.txt.tar.gz -C ./src/ORB_SLAM3_ROS2_pointcloud/vocabulary/
-```
-
 ---
 
 ## ▶️ Usage
@@ -119,5 +114,6 @@ This project extends ORB-SLAM3 with ROS 2 integration and point cloud generation
 ## ▶️ Testing with EuRoC Image
 
 Check out this [repo](https://github.com/ahnavocado/gamja_dataset) for additional info
+
 
 
