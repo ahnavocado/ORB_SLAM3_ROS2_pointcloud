@@ -55,10 +55,14 @@ source /opt/ros/humble/setup.bash
 colcon build --symlink-install --packages-ignore orbslam2 \
   --cmake-args -DCMAKE_CXX_FLAGS="-Wno-error -Wno-error=deprecated-declarations -Wno-deprecated-declarations -Wno-error=reorder -Wno-error=unused-parameter"
 ```
-
-Source environment:
-```bash
-source install/setup.bash
+# Quick summary (copy and paste this)
+```
+# In ~/colcon_ws
+source /opt/ros/humble/setup.bash
+colcon build --symlink-install --packages-ignore orbslam2 --cmake-args -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_CXX_FLAGS="-g -O0"
+source install/setup.bash 
+ros2 run orbslam3_ros2_pointcloud mono ./src/ORB_SLAM3_ROS2_pointcloud/ORB_SLAM3/Vocabulary/ORBvoc.txt ./src/ORB_SLAM3_ROS2_pointcloud/ORB_SLAM3_ROS2/config/monocular/EuRoC.yaml --ros-args -r camera:=/camera/image_raw \
+--ros-args --log-level DEBUG
 ```
 
 ---
@@ -67,10 +71,7 @@ source install/setup.bash
 
 ###  Run Monocular SLAM
 ```bash
-ros2 run orbslam3_ros2_pointcloud mono \
-  ./src/ORB_SLAM3_ROS2_pointcloud/ORB_SLAM3_ROS2/vocabulary/ORBvoc.txt \
-  ./src/ORB_SLAM3_ROS2_pointcloud/ORB_SLAM3_ROS2/config/monocular/TUM1.yaml \
-  --ros-args -r camera:=/camera/image_raw
+ros2 run orbslam3_ros2_pointcloud mono ./src/ORB_SLAM3_ROS2_pointcloud/ORB_SLAM3/Vocabulary/ORBvoc.txt ./src/ORB_SLAM3_ROS2_pointcloud/ORB_SLAM3_ROS2/config/monocular/EuRoC.yaml --ros-args -r camera:=/camera/image_raw --ros-args --log-level DEBUG
 ```
 
 
@@ -114,6 +115,7 @@ This project extends ORB-SLAM3 with ROS 2 integration and point cloud generation
 ## ▶️ Testing with EuRoC Image
 
 Check out this [repo](https://github.com/ahnavocado/gamja_dataset) for additional info
+
 
 
 
